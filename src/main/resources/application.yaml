@@ -1,0 +1,34 @@
+server:
+  port: 8081
+
+spring:
+  profiles:
+    active: local
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://127.0.0.1:3308/todo-local
+    username: my-todo
+    password: todo1!
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+        order_insert: true
+        order_updates: true
+        jdbc:
+          batch_size: 2000
+    show-sql: true
+    defer-datasource-initialization: true
+    open-in-view: false
