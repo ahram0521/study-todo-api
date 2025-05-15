@@ -2,15 +2,8 @@ server:
   port: 8081
 
 spring:
-  profiles:
-    active: local
-
----
-
-spring:
-  config:
-    activate:
-      on-profile: local
+  application:
+    name: todoapi
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver

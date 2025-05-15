@@ -1,6 +1,7 @@
 package dev.study.todoapi.plan.entity;
 
 import dev.study.todoapi.common.BaseEntity;
+import dev.study.todoapi.routine.entity.RoutineEntity;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import org.hibernate.annotations.Comment;
@@ -14,9 +15,10 @@ public class PlanEntity extends BaseEntity {
     @Comment("일정 고유 번호")
     private Long id;
 
-    @Column(name = "routine_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "routine_id")
     @Comment("루틴 ID")
-    private Long routineId = 0L;
+    private RoutineEntity routine;
 
     @Column(name = "content", columnDefinition = "TEXT", nullable = false)
     @Comment("일정 내용")
