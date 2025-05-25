@@ -33,4 +33,11 @@ public class PlanService {
 
         nowPlan.updateCompleted(completed);
     }
+
+    @Transactional
+    public void deletePlan(Long id) {
+        PlanEntity nowPlan = planRepository.findById(id).orElseThrow();
+
+        nowPlan.deleteEntity();
+    }
 }

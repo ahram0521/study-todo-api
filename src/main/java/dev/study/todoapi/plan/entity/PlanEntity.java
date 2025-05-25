@@ -42,6 +42,10 @@ public class PlanEntity extends BaseEntity {
     @Comment("완료 여부")
     private Integer isCompleted;
 
+    @Column(name = "is_deleted", columnDefinition = "TINYINT DEFAULT 0")
+    @Comment("삭제 여부")
+    private Integer isDeleted;
+
     @Builder
     public PlanEntity(String content, LocalDate planDate, Integer isCompleted) {
         this.content = content;
@@ -60,6 +64,10 @@ public class PlanEntity extends BaseEntity {
     public void updateEntity(PlanRequestDto dto) {
         this.content = dto.getContent();
         this.planDate = dto.getPlanDate();
+    }
+
+    public void deleteEntity() {
+        this.isDeleted = 1;
     }
 
     public void updateCompleted(Integer isCompleted) {

@@ -12,10 +12,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
-    @Column(name = "is_deleted", columnDefinition = "TINYINT")
-    @Comment("삭제 여부")
-    private Integer isDeleted = 0;
-
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     @Comment("생성일자")

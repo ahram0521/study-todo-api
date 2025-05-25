@@ -36,4 +36,8 @@ public class RoutineEntity extends BaseEntity {
     @Column(name = "end_date", nullable = false)
     @Comment("루틴 종료일")
     private LocalDate endDate;
+
+    @Column(name = "is_deleted", columnDefinition = "TINYINT DEFAULT 0")
+    @Comment("삭제 여부")
+    private Integer isDeleted;
 }
