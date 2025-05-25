@@ -2,6 +2,8 @@ package dev.study.todoapi.plan;
 
 import dev.study.todoapi.plan.dto.PlanRequestDto;
 import dev.study.todoapi.plan.entity.PlanEntity;
+import java.time.LocalDate;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,5 +41,11 @@ public class PlanService {
         PlanEntity nowPlan = planRepository.findById(id).orElseThrow();
 
         nowPlan.deleteEntity();
+    }
+
+    public List<PlanEntity> getPlansByDate(String planDate) {
+        LocalDate date = LocalDate.parse(planDate);
+
+        return planRepository.findByPlanDateAndIsDeleted(date, 0);
     }
 }
