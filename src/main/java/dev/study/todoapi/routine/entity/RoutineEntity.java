@@ -3,8 +3,10 @@ package dev.study.todoapi.routine.entity;
 import dev.study.todoapi.common.BaseEntity;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import lombok.Getter;
 import org.hibernate.annotations.Comment;
 
+@Getter
 @Entity
 @Table(name = "routines")
 public class RoutineEntity extends BaseEntity {
