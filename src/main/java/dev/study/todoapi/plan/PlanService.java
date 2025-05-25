@@ -26,4 +26,11 @@ public class PlanService {
 
         nowPlan.updateEntity(planRequestDto);
     }
+
+    @Transactional
+    public void setPlanCompleted(Long id, Integer completed) {
+        PlanEntity nowPlan = planRepository.findById(id).orElseThrow();
+
+        nowPlan.updateCompleted(completed);
+    }
 }

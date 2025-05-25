@@ -23,8 +23,14 @@ public class PlanController {
     }
 
     @PatchMapping("/{plan-id}")
-    public ResponseEntity<Void> updatePlan(@PathVariable("plan-id") Long id, @RequestBody PlanRequestDto planRequestDto) {
-        planService.updatePlan(id, planRequestDto);
+    public ResponseEntity<Void> updatePlan(@PathVariable("plan-id") Long planId, @RequestBody PlanRequestDto planRequestDto) {
+        planService.updatePlan(planId, planRequestDto);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{plan-id}/completed")
+    public ResponseEntity<Void> setPlanCompleted(@PathVariable("plan-id") Long planId, @RequestBody PlanRequestDto planRequestDto) {
+        planService.setPlanCompleted(planId, planRequestDto.getIsCompleted());
         return ResponseEntity.noContent().build();
     }
 }

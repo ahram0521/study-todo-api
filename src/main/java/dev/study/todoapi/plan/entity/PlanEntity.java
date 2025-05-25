@@ -61,4 +61,9 @@ public class PlanEntity extends BaseEntity {
         this.content = dto.getContent();
         this.planDate = dto.getPlanDate();
     }
+
+    public void updateCompleted(Integer isCompleted) {
+        this.isCompleted = isCompleted;
+        this.completedDate = LocalDate.now();
+    }
 }
