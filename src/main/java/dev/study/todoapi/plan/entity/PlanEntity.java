@@ -4,10 +4,15 @@ import dev.study.todoapi.common.BaseEntity;
 import dev.study.todoapi.routine.entity.RoutineEntity;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
+@Getter
 @Entity
 @Table(name = "plans")
+@NoArgsConstructor
 public class PlanEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +23,7 @@ public class PlanEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "routine_id")
     @Comment("루틴 ID")
-    private RoutineEntity routine;
+    private RoutineEntity routineId;
 
     @Column(name = "content", columnDefinition = "TEXT", nullable = false)
     @Comment("일정 내용")
@@ -32,7 +37,14 @@ public class PlanEntity extends BaseEntity {
     @Comment("일정 완료일")
     private LocalDate completedDate;
 
-    @Column(name = "is_completed", columnDefinition = "TINYINT", nullable = true)
+    @Column(name = "is_completed", columnDefinition = "TINYINT DEFAULT 0", nullable = true)
     @Comment("완료 여부")
     private Integer isCompleted;
+
+    @Builder
+    public PlanEntity(String content, LocalDate planDate, Integer isCompleted) {
+        this.content = content;
+        this.planDate = planDate;
+        this.isCompleted = isCompleted;
+    }
 }
