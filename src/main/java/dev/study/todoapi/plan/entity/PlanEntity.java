@@ -1,6 +1,7 @@
 package dev.study.todoapi.plan.entity;
 
 import dev.study.todoapi.common.BaseEntity;
+import dev.study.todoapi.plan.dto.PlanRequestDto;
 import dev.study.todoapi.routine.entity.RoutineEntity;
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -46,5 +47,18 @@ public class PlanEntity extends BaseEntity {
         this.content = content;
         this.planDate = planDate;
         this.isCompleted = isCompleted;
+    }
+
+    public PlanEntity insertEntity(PlanRequestDto dto) {
+        return PlanEntity.builder()
+                .content(dto.getContent())
+                .planDate(dto.getPlanDate())
+                .isCompleted(dto.getIsCompleted())
+                .build();
+    }
+
+    public void updateEntity(PlanRequestDto dto) {
+        this.content = dto.getContent();
+        this.planDate = dto.getPlanDate();
     }
 }
