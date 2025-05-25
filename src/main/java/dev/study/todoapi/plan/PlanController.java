@@ -4,6 +4,7 @@ import dev.study.todoapi.plan.dto.PlanRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,12 @@ public class PlanController {
     @PatchMapping("/{plan-id}/completed")
     public ResponseEntity<Void> setPlanCompleted(@PathVariable("plan-id") Long planId, @RequestBody PlanRequestDto planRequestDto) {
         planService.setPlanCompleted(planId, planRequestDto.getIsCompleted());
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{plan-id}")
+    public ResponseEntity<Void> deletePlan(@PathVariable("plan-id") Long planId) {
+        planService.deletePlan(planId);
         return ResponseEntity.noContent().build();
     }
 }
