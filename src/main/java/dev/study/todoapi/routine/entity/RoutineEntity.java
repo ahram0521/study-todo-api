@@ -72,4 +72,8 @@ public class RoutineEntity extends BaseEntity {
         this.repeatValue = dto.getRepeatValue();
         this.content = dto.getContent();
     }
+
+    public void deleteEntity() {
+        this.isDeleted = 1;
+    }
 }

@@ -43,4 +43,16 @@ public class RoutineService {
         List<PlanEntity> newPlans = PlanEntity.insertFromRoutine(nowRoutine);
         planRepository.saveAll(newPlans);
     }
+
+    @Transactional
+    public void deleteRoutine(Long id) {
+        RoutineEntity nowRoutine = routineRepository.findById(id).orElseThrow();
+
+        nowRoutine.deleteEntity();
+
+        List<PlanEntity> routinePlans = planRepository.findDeletedRoutineTarget(nowRoutine, 0, LocalDate.now());
+        for (PlanEntity plan : routinePlans) {
+            plan.deleteEntity();
+        }
+    }
 }
