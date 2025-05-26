@@ -52,6 +52,7 @@ public class RoutineEntity extends BaseEntity {
         this.repeatType = repeatType;
         this.repeatValue = repeatValue;
         this.content = content;
+        this.isDeleted = 0;
     }
 
     public RoutineEntity insertEntity(RoutineRequestDto dto) {
@@ -62,5 +63,13 @@ public class RoutineEntity extends BaseEntity {
                 .repeatValue(dto.getRepeatValue())
                 .content(dto.getContent())
                 .build();
+    }
+
+    public void updateEntity(RoutineRequestDto dto) {
+        this.startDate = dto.getStartDate();
+        this.endDate = dto.getEndDate();
+        this.repeatType = dto.getRepeatType();
+        this.repeatValue = dto.getRepeatValue();
+        this.content = dto.getContent();
     }
 }

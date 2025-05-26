@@ -56,6 +56,7 @@ public class PlanEntity extends BaseEntity {
         this.planDate = planDate;
         this.isCompleted = isCompleted;
         this.routineId = routineId;
+        this.isDeleted = 0;
     }
 
     public PlanEntity insertEntity(PlanRequestDto dto) {
