@@ -3,8 +3,12 @@ package dev.study.todoapi.plan.entity;
 import dev.study.todoapi.common.BaseEntity;
 import dev.study.todoapi.plan.dto.PlanRequestDto;
 import dev.study.todoapi.routine.entity.RoutineEntity;
+import dev.study.todoapi.routine.entity.RoutineType;
 import jakarta.persistence.*;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,10 +51,11 @@ public class PlanEntity extends BaseEntity {
     private Integer isDeleted;
 
     @Builder
-    public PlanEntity(String content, LocalDate planDate, Integer isCompleted) {
+    public PlanEntity(String content, LocalDate planDate, Integer isCompleted, RoutineEntity routineId) {
         this.content = content;
         this.planDate = planDate;
         this.isCompleted = isCompleted;
+        this.routineId = routineId;
     }
 
     public PlanEntity insertEntity(PlanRequestDto dto) {
@@ -73,5 +78,43 @@ public class PlanEntity extends BaseEntity {
     public void updateCompleted(Integer isCompleted) {
         this.isCompleted = isCompleted;
         this.completedDate = LocalDate.now();
+    }
+
+    public static List<PlanEntity> insertFromRoutine(RoutineEntity routineEntity) {
+        List<PlanEntity> plans = new ArrayList<>();
+        LocalDate current = routineEntity.getStartDate();
+        LocalDate end = routineEntity.getEndDate();
+        String repeatValue = routineEntity.getRepeatValue();
+
+        for (LocalDate date = current; !date.isAfter(end); date = date.plusDays(1)) {
+            boolean insert = false;
+            RoutineType type = routineEntity.getRepeatType();
+
+            if (type == RoutineType.daily) {
+                insert = true;
+            } else if (type == RoutineType.weekly) {
+                DayOfWeek weekday = date.getDayOfWeek();
+                if (weekday == DayOfWeek.of(Integer.parseInt(repeatValue))) {
+                    insert = true;
+                }
+            } else if (type == RoutineType.monthly) {
+                if (Integer.toString(date.getDayOfMonth()).equals(repeatValue)) {
+                    insert = true;
+                }
+            }
+
+            if (insert) {
+                PlanEntity plan = PlanEntity.builder()
+                        .content(routineEntity.getContent())
+                        .planDate(date)
+                        .isCompleted(0)
+                        .routineId(routineEntity)
+                        .build();
+
+                plans.add(plan);
+            }
+        }
+
+        return plans;
     }
 }

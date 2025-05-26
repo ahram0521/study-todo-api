@@ -1,14 +1,18 @@
 package dev.study.todoapi.routine.entity;
 
 import dev.study.todoapi.common.BaseEntity;
+import dev.study.todoapi.routine.dto.RoutineRequestDto;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
 @Getter
 @Entity
 @Table(name = "routines")
+@NoArgsConstructor
 public class RoutineEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +23,7 @@ public class RoutineEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "routine_type", nullable = false)
     @Comment("루틴 타입 (daily:매일, weekly:주간, monthly:월간)")
-    private RoutineType routineType;
+    private RoutineType repeatType;
 
     @Column(name = "repeat_value", nullable = true)
     @Comment("루틴 조건 (daily: null, weekly: 요일, monthly: 특정일)")
@@ -40,4 +44,23 @@ public class RoutineEntity extends BaseEntity {
     @Column(name = "is_deleted", columnDefinition = "TINYINT DEFAULT 0")
     @Comment("삭제 여부")
     private Integer isDeleted;
+
+    @Builder
+    public RoutineEntity(LocalDate startDate, LocalDate endDate, RoutineType repeatType, String repeatValue, String content) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.repeatType = repeatType;
+        this.repeatValue = repeatValue;
+        this.content = content;
+    }
+
+    public RoutineEntity insertEntity(RoutineRequestDto dto) {
+        return RoutineEntity.builder()
+                .startDate(dto.getStartDate())
+                .endDate(dto.getEndDate())
+                .repeatType(dto.getRepeatType())
+                .repeatValue(dto.getRepeatValue())
+                .content(dto.getContent())
+                .build();
+    }
 }
