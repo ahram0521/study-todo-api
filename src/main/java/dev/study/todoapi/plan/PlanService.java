@@ -3,6 +3,7 @@ package dev.study.todoapi.plan;
 import dev.study.todoapi.common.exception.NotFoundException;
 import dev.study.todoapi.plan.dto.PlanRequestDto;
 import dev.study.todoapi.plan.entity.PlanEntity;
+import dev.study.todoapi.routine.dto.PlanDailyCountDto;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -50,10 +51,10 @@ public class PlanService {
         return planRepository.findByPlanDateAndIsDeleted(date, 0);
     }
 
-//    public List<PlanDailyCountDto> getCountDailyPlan(LocalDate month) {
-//        LocalDate startDate = month.withDayOfMonth(1);
-//        LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
-//
-//        return planRepository.getCountDailyPlan(startDate, endDate);
-//    }
+    public List<PlanDailyCountDto> getCountDailyPlan(LocalDate month) {
+        LocalDate startDate = month.withDayOfMonth(1);
+        LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
+
+        return planRepository.getCountDailyPlan(startDate, endDate);
+    }
 }

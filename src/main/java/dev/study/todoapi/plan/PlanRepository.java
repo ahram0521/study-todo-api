@@ -27,17 +27,17 @@ public interface PlanRepository extends JpaRepository<PlanEntity, Long> {
             @Param("today") LocalDate PlanDate
     );
 
-//    @Query("""
-//        SELECT new dev.study.todoapi.routine.dto.PlanDailyCountDto(
-//            plan.planDate, COUNT(plan)
-//        )
-//        FROM PlanEntity plan
-//        WHERE plan.planDate BETWEEN :startDate AND :endDate
-//        GROUP BY plan.planDate
-//        ORDER BY plan.planDate
-//    """)
-//    List<PlanDailyCountDto> getCountDailyPlan(
-//            @Param("startDate") LocalDate start,
-//            @Param("endDate") LocalDate end
-//    );
+    @Query("""
+        SELECT new dev.study.todoapi.routine.dto.PlanDailyCountDto(
+            plan.planDate, COUNT(plan)
+        )
+        FROM PlanEntity plan
+        WHERE plan.planDate BETWEEN :startDate AND :endDate
+        GROUP BY plan.planDate
+        ORDER BY plan.planDate
+    """)
+    List<PlanDailyCountDto> getCountDailyPlan(
+            @Param("startDate") LocalDate start,
+            @Param("endDate") LocalDate end
+    );
 }

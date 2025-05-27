@@ -1,11 +1,15 @@
 package dev.study.todoapi.routine.dto;
 
 import java.time.LocalDate;
-import lombok.Generated;
+import lombok.Getter;
 
-@Generated
+@Getter
 public class PlanDailyCountDto {
     private LocalDate planDate;
+    private Long count;
 
-    private int count;
+    public PlanDailyCountDto(LocalDate planDate, Long count) {
+        this.planDate = planDate;
+        this.count = count;
+    }
 }
