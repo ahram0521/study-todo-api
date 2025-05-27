@@ -1,5 +1,6 @@
 package dev.study.todoapi.routine;
 
+import dev.study.todoapi.common.exception.NotFoundException;
 import dev.study.todoapi.plan.PlanRepository;
 import dev.study.todoapi.plan.entity.PlanEntity;
 import dev.study.todoapi.routine.dto.RoutineRequestDto;
@@ -29,7 +30,7 @@ public class RoutineService {
 
     @Transactional
     public void updateRoutine(Long id, RoutineRequestDto routineRequestDto) {
-        RoutineEntity nowRoutine = routineRepository.findById(id).orElseThrow();
+        RoutineEntity nowRoutine = routineRepository.findById(id).orElseThrow(() -> new NotFoundException("루틴을 찾을 수 없습니다."));
 
         nowRoutine.updateEntity(routineRequestDto);
 
@@ -46,7 +47,7 @@ public class RoutineService {
 
     @Transactional
     public void deleteRoutine(Long id) {
-        RoutineEntity nowRoutine = routineRepository.findById(id).orElseThrow();
+        RoutineEntity nowRoutine = routineRepository.findById(id).orElseThrow(() -> new NotFoundException("루틴을 찾을 수 없습니다."));
 
         nowRoutine.deleteEntity();
 
