@@ -63,13 +63,13 @@ public class PlanController {
         return ResponseEntity.ok(dailyPlan);
     }
 
-//    @GetMapping("/count/{month}")
-//    public ResponseEntity<List<PlanDailyCountDto>> getDailyPlanCount(@PathVariable("month") String month) {
-//        System.out.println("요청 month 파라미터 = " + month);
-//
-//        LocalDate dateMonth = LocalDate.parse(month + "-01");
-//        List<PlanDailyCountDto> dailyPlan = planService.getCountDailyPlan(dateMonth);
-//
-//        return ResponseEntity.ok(dailyPlan);
-//    }
+    @GetMapping("/count/{month}")
+    public ResponseEntity<List<PlanDailyCountDto>> getDailyPlanCount(@PathVariable("month") String month) {
+        System.out.println("요청 month 파라미터 = " + month);
+
+        LocalDate dateMonth = LocalDate.parse(month + "-01");
+        List<PlanDailyCountDto> dailyPlan = planService.getCountDailyPlan(dateMonth);
+
+        return ResponseEntity.ok(dailyPlan);
+    }
 }
