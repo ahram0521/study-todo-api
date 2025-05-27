@@ -1,8 +1,8 @@
 package dev.study.todoapi.plan;
 
+import dev.study.todoapi.common.exception.NotFoundException;
 import dev.study.todoapi.plan.dto.PlanRequestDto;
 import dev.study.todoapi.plan.entity.PlanEntity;
-import dev.study.todoapi.routine.dto.PlanDailyCountDto;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -25,21 +25,21 @@ public class PlanService {
 
     @Transactional
     public void updatePlan(Long id, PlanRequestDto planRequestDto) {
-        PlanEntity nowPlan = planRepository.findById(id).orElseThrow();
+        PlanEntity nowPlan = planRepository.findById(id).orElseThrow(() -> new NotFoundException("일정을 찾을 수 없습니다."));
 
         nowPlan.updateEntity(planRequestDto);
     }
 
     @Transactional
     public void setPlanCompleted(Long id, Integer completed) {
-        PlanEntity nowPlan = planRepository.findById(id).orElseThrow();
+        PlanEntity nowPlan = planRepository.findById(id).orElseThrow(() -> new NotFoundException("일정을 찾을 수 없습니다."));
 
         nowPlan.updateCompleted(completed);
     }
 
     @Transactional
     public void deletePlan(Long id) {
-        PlanEntity nowPlan = planRepository.findById(id).orElseThrow();
+        PlanEntity nowPlan = planRepository.findById(id).orElseThrow(() -> new NotFoundException("일정을 찾을 수 없습니다."));
 
         nowPlan.deleteEntity();
     }
