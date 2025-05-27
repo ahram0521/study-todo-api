@@ -1,6 +1,7 @@
 package dev.study.todoapi.plan;
 
 import dev.study.todoapi.plan.entity.PlanEntity;
+import dev.study.todoapi.routine.dto.PlanDailyCountDto;
 import dev.study.todoapi.routine.entity.RoutineEntity;
 import java.time.LocalDate;
 import java.util.List;
@@ -21,8 +22,22 @@ public interface PlanRepository extends JpaRepository<PlanEntity, Long> {
           AND plan.planDate >= :today
     """)
     List<PlanEntity> findDeletedRoutineTarget(
-        @Param("routine") RoutineEntity RoutineId,
-        @Param("isDeleted") Integer IsDeleted,
-        @Param("today") LocalDate PlanDate
+            @Param("routine") RoutineEntity RoutineId,
+            @Param("isDeleted") Integer IsDeleted,
+            @Param("today") LocalDate PlanDate
     );
+
+//    @Query("""
+//        SELECT new dev.study.todoapi.routine.dto.PlanDailyCountDto(
+//            plan.planDate, COUNT(plan)
+//        )
+//        FROM PlanEntity plan
+//        WHERE plan.planDate BETWEEN :startDate AND :endDate
+//        GROUP BY plan.planDate
+//        ORDER BY plan.planDate
+//    """)
+//    List<PlanDailyCountDto> getCountDailyPlan(
+//            @Param("startDate") LocalDate start,
+//            @Param("endDate") LocalDate end
+//    );
 }
